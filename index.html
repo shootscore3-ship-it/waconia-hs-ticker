@@ -14,7 +14,8 @@
     }
     .label{
       padding:10px 14px;border-radius:12px;background:rgba(45,212,191,.15);
-      border:1px solid rgba(45,212,191,.35);font-weight:900;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap
+      border:1px solid rgba(45,212,191,.35);font-weight:900;letter-spacing:.6px;
+      text-transform:uppercase;white-space:nowrap
     }
     .marquee{flex:1;overflow:hidden;height:100%;display:flex;align-items:center}
     .inner{
@@ -23,48 +24,71 @@
       font-size:30px;font-weight:900
     }
     .sep{color:rgba(255,255,255,.25)}
-    .tag{font-size:16px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);font-weight:900}
+    .tag{
+      font-size:16px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);font-weight:900
+    }
     .final{color:#a3e635;border-color:rgba(163,230,53,.35);background:rgba(163,230,53,.12)}
     .live{color:#fbbf24;border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
     .next{color:#2dd4bf;border-color:rgba(45,212,191,.35);background:rgba(45,212,191,.12)}
     @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
   </style>
 </head>
+
 <body>
   <div class="bar">
-    <div class="label">WACONIA HS • LAST 7 DAYS + NEXT 5</div>
-    <div class="marquee"><div class="inner" id="inner"><span>Loading…</span></div></div>
+    <div class="label">WACONIA HS • SCORES & UPCOMING</div>
+    <div class="marquee">
+      <div class="inner" id="inner"><span>Loading…</span></div>
+    </div>
   </div>
 
   <script>
-    const FEED_URL = "PASTE_YOUR_WORKER_URL_HERE"; // <-- replace with your Worker URL
+    // ✅ YOUR WORKER FEED URL (already set)
+    const FEED_URL = "https://calm-limit-4982.shootscore3.workers.dev";
+
+    // How often to refresh data
     const REFRESH_MS = 60_000;
+
+    // Ticker speed (bigger = slower)
+    const SCROLL_SECONDS = 55;
+
     const inner = document.getElementById("inner");
+    inner.style.animationDuration = SCROLL_SECONDS + "s";
 
     function tag(status){
-      if(status==="final") return '<span class="tag final">FINAL</span>';
-      if(status==="live")  return '<span class="tag live">LIVE</span>';
+      if(status === "final") return '<span class="tag final">FINAL</span>';
+      if(status === "live")  return '<span class="tag live">LIVE</span>';
       return '<span class="tag next">NEXT</span>';
     }
 
     function render(items){
-      if(!items?.length){
+      if(!items || items.length === 0){
         inner.innerHTML = `<span>${tag("next")} No games found</span>`;
         return;
       }
-      const chunks = items.map(it => `<span>${tag(it.status)} ${it.text}</span>`);
+
+      const chunks = items.map(it => {
+        const st = (it.status || "next").toLowerCase();
+        const txt = it.text || "";
+        return `<span>${tag(st)} ${txt}</span>`;
+      });
+
       const html = chunks.join(` <span class="sep">•</span> `);
-      inner.innerHTML = html + ` <span class="sep">•</span> ` + html; // duplicate for seamless loop
+
+      // Duplicate content so it loops smoothly
+      inner.innerHTML = html + ` <span class="sep">•</span> ` + html;
     }
 
     async function load(){
       try{
         const res = await fetch(FEED_URL + "?v=" + Date.now(), { cache: "no-store" });
+        if(!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         render(data.items || []);
       }catch(e){
         inner.innerHTML = `<span>${tag("next")} Unable to load ticker data</span>`;
-        console.error(e);
+        console.error("Ticker load error:", e);
       }
     }
 
