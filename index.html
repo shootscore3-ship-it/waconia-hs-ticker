@@ -19,7 +19,7 @@
     .marquee{flex:1;overflow:hidden;height:100%;display:flex;align-items:center}
     .inner{
       display:inline-flex;gap:34px;white-space:nowrap;will-change:transform;
-      animation:scroll linear infinite;animation-duration:55s; /* speed */
+      animation:scroll linear infinite;animation-duration:55s;
       font-size:30px;font-weight:900
     }
     .sep{color:rgba(255,255,255,.25)}
@@ -32,14 +32,13 @@
 </head>
 <body>
   <div class="bar">
-    <div class="label">WACONIA HS • SCORES & UPCOMING</div>
+    <div class="label">WACONIA HS • LAST 7 DAYS + NEXT 5</div>
     <div class="marquee"><div class="inner" id="inner"><span>Loading…</span></div></div>
   </div>
 
   <script>
-    const FEED_URL = "PASTE_YOUR_WORKER_URL_HERE"; // <-- change this
+    const FEED_URL = "PASTE_YOUR_WORKER_URL_HERE"; // <-- replace with your Worker URL
     const REFRESH_MS = 60_000;
-
     const inner = document.getElementById("inner");
 
     function tag(status){
@@ -50,13 +49,12 @@
 
     function render(items){
       if(!items?.length){
-        inner.innerHTML = `<span>${tag("next")} No games found (last 7 days / next 5 days)</span>`;
+        inner.innerHTML = `<span>${tag("next")} No games found</span>`;
         return;
       }
-      const chunks = items.map(it => `<span>${tag(it.status)} ${it.text.replace(/^FINAL • |^LIVE • |^NEXT • /,'')}</span>`);
+      const chunks = items.map(it => `<span>${tag(it.status)} ${it.text}</span>`);
       const html = chunks.join(` <span class="sep">•</span> `);
-      // duplicate for seamless loop
-      inner.innerHTML = html + ` <span class="sep">•</span> ` + html;
+      inner.innerHTML = html + ` <span class="sep">•</span> ` + html; // duplicate for seamless loop
     }
 
     async function load(){
