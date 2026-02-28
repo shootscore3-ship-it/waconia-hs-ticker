@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Waconia HS Ticker</title>
+  <style>
+    html,body{margin:0;height:100%;background:transparent;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .bar{
+      position:fixed;left:0;right:0;bottom:0;height:110px;
+      background:linear-gradient(90deg,#0b0f14,#111826);
+      border-top:2px solid rgba(255,255,255,.10);
+      display:flex;align-items:center;gap:16px;padding:14px 18px;box-sizing:border-box;color:#f3f6ff
+    }
+    .label{
+      padding:10px 14px;border-radius:12px;background:rgba(45,212,191,.15);
+      border:1px solid rgba(45,212,191,.35);font-weight:900;letter-spacing:.6px;text-transform:uppercase;white-space:nowrap
+    }
+    .marquee{flex:1;overflow:hidden;height:100%;display:flex;align-items:center}
+    .inner{
+      display:inline-flex;gap:34px;white-space:nowrap;will-change:transform;
+      animation:scroll linear infinite;animation-duration:55s; /* speed */
+      font-size:30px;font-weight:900
+    }
+    .sep{color:rgba(255,255,255,.25)}
+    .tag{font-size:16px;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);font-weight:900}
+    .final{color:#a3e635;border-color:rgba(163,230,53,.35);background:rgba(163,230,53,.12)}
+    .live{color:#fbbf24;border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+    .next{color:#2dd4bf;border-color:rgba(45,212,191,.35);background:rgba(45,212,191,.12)}
+    @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <div class="label">WACONIA HS • SCORES & UPCOMING</div>
+    <div class="marquee"><div class="inner" id="inner"><span>Loading…</span></div></div>
+  </div>
+
+  <script>
+    const FEED_URL = "PASTE_YOUR_WORKER_URL_HERE"; // <-- change this
+    const REFRESH_MS = 60_000;
+
+    const inner = document.getElementById("inner");
+
+    function tag(status){
+      if(status==="final") return '<span class="tag final">FINAL</span>';
+      if(status==="live")  return '<span class="tag live">LIVE</span>';
+      return '<span class="tag next">NEXT</span>';
+    }
+
+    function render(items){
+      if(!items?.length){
+        inner.innerHTML = `<span>${tag("next")} No games found (last 7 days / next 5 days)</span>`;
+        return;
+      }
+      const chunks = items.map(it => `<span>${tag(it.status)} ${it.text.replace(/^FINAL • |^LIVE • |^NEXT • /,'')}</span>`);
+      const html = chunks.join(` <span class="sep">•</span> `);
+      // duplicate for seamless loop
+      inner.innerHTML = html + ` <span class="sep">•</span> ` + html;
+    }
+
+    async function load(){
+      try{
+        const res = await fetch(FEED_URL + "?v=" + Date.now(), { cache: "no-store" });
+        const data = await res.json();
+        render(data.items || []);
+      }catch(e){
+        inner.innerHTML = `<span>${tag("next")} Unable to load ticker data</span>`;
+        console.error(e);
+      }
+    }
+
+    load();
+    setInterval(load, REFRESH_MS);
+  </script>
+</body>
+</html>
