@@ -10,15 +10,14 @@
       --bg1:#0b0f14;
       --bg2:#111826;
 
-      --text:#f3f6ff;
-      --muted:rgba(243,246,255,.70);
-      --line:rgba(255,255,255,.10);
-      --sep:rgba(243,246,255,.18);
+      --white:#ffffff;
+      --muted:rgba(255,255,255,.75);
+      --line:rgba(255,255,255,.12);
+      --sep:rgba(255,255,255,.22);
 
       --teal:#2dd4bf;
       --lime:#a3e635;
       --amber:#fbbf24;
-      --red:#fb7185;
 
       --shadow: 0 10px 26px rgba(0,0,0,.45);
     }
@@ -27,66 +26,59 @@
     html,body{height:100%;margin:0;background:transparent;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;overflow:hidden}
     body{background:linear-gradient(180deg,var(--bg0),#05070c);}
 
-    /* FULLSCREEN FRAME */
-    .app{
-      height:100%;
-      display:flex;
-      flex-direction:column;
-    }
+    .app{height:100%;display:flex;flex-direction:column}
 
     /* TOP STRIP */
     .topbar{
-      height:94px;
+      height:96px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:16px 22px;
       background:linear-gradient(90deg,var(--bg1),var(--bg2));
       border-bottom:1px solid var(--line);
+      color:var(--white);
     }
-    .left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
+    .left{display:flex;align-items:center;gap:14px;min-width:0;}
     .pill{
       padding:10px 14px;
       border-radius:14px;
-      background:rgba(45,212,191,.14);
-      border:1px solid rgba(45,212,191,.33);
+      background:rgba(45,212,191,.18);
+      border:1px solid rgba(45,212,191,.40);
       font-weight:1000;
       letter-spacing:.9px;
       text-transform:uppercase;
       white-space:nowrap;
       font-size:16px;
+      color:var(--white);
     }
     .titles{min-width:0}
     .title{
-      font-size:26px;
+      font-size:28px;
       font-weight:1100;
       letter-spacing:.2px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:1100px;
+      max-width:1200px;
+      color:var(--white);
     }
     .sub{
       margin-top:3px;
       color:var(--muted);
-      font-weight:850;
-      font-size:14px;
+      font-weight:900;
+      font-size:15px;
       display:flex;
       gap:12px;
       align-items:center;
       flex-wrap:wrap;
     }
     .clock{
-      font-weight:1000;
-      font-size:28px;
-      color:var(--muted);
+      font-weight:1100;
+      font-size:30px;
+      color:var(--white);
       letter-spacing:.3px;
-      min-width:160px;
+      min-width:170px;
       text-align:right;
     }
 
@@ -94,174 +86,166 @@
     .stage{
       flex:1;
       display:flex;
-      flex-direction:column;
+      align-items:center;
       justify-content:center;
-      padding:16px;
-      gap:14px;
+      padding:18px;
     }
 
     .tickerWrap{
       position:relative;
-      flex:1;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      width:100%;
+      height:100%;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       overflow:hidden;
       display:flex;
       align-items:center;
-      padding:14px 18px;
+      padding:18px 22px;
     }
 
-    /* edge fades (pro look) */
+    /* edge fades */
     .tickerWrap:before, .tickerWrap:after{
       content:"";
-      position:absolute;
-      top:0;bottom:0;
-      width:110px;
+      position:absolute;top:0;bottom:0;
+      width:140px;
       z-index:3;
       pointer-events:none;
     }
     .tickerWrap:before{left:0;background:linear-gradient(90deg, rgba(9,12,18,1), rgba(9,12,18,0));}
     .tickerWrap:after{right:0;background:linear-gradient(270deg, rgba(9,12,18,1), rgba(9,12,18,0));}
 
-    /* MARQUEE */
     .marquee{
       width:100%;
       overflow:hidden;
       position:relative;
       z-index:2;
     }
+
+    /* MASSIVE TEXT */
     .inner{
       display:inline-flex;
       align-items:center;
-      gap:34px;
+      gap:48px;
       white-space:nowrap;
       will-change:transform;
       animation:scroll linear infinite;
-      animation-duration:60s; /* speed controlled in JS too */
+      animation-duration:80s; /* slower for readability */
       font-weight:1100;
-      font-size:42px;         /* HUGE ticker */
+      font-size:64px;         /* HUGE */
       letter-spacing:.2px;
+      color:var(--white);
     }
     @keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    /* ONE ITEM */
     .item{
       display:inline-flex;
       align-items:center;
-      gap:14px;
-      padding:8px 2px;
+      gap:22px;
+      padding:10px 2px;
+      color:var(--white);
     }
 
-    /* STATUS TAG */
+    /* status tag */
     .tag{
-      font-size:14px;
-      padding:6px 12px;
+      font-size:22px;
+      padding:10px 18px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.06);
-      font-weight:1100;
-      letter-spacing:.7px;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(255,255,255,.08);
+      font-weight:1200;
+      letter-spacing:1px;
       text-transform:uppercase;
       flex:0 0 auto;
+      color:var(--white);
     }
-    .final{color:var(--lime);border-color:rgba(163,230,53,.35);background:rgba(163,230,53,.12)}
-    .live{color:var(--amber);border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
-    .next{color:var(--teal);border-color:rgba(45,212,191,.35);background:rgba(45,212,191,.12)}
+    .final{border-color:rgba(163,230,53,.55); background:rgba(163,230,53,.16); }
+    .live{border-color:rgba(251,191,36,.55); background:rgba(251,191,36,.16); }
+    .next{border-color:rgba(45,212,191,.55); background:rgba(45,212,191,.16); }
 
-    /* SPORT DECAL (SVG) */
+    /* sport decal */
     .sportIcon{
-      width:44px;
-      height:44px;
-      border-radius:16px;
+      width:74px;
+      height:74px;
+      border-radius:24px;
       display:grid;
       place-items:center;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 6px 18px rgba(0,0,0,.30);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
       flex:0 0 auto;
-      color:rgba(243,246,255,.88);
+      color:var(--white);
     }
-    .sportIcon svg{width:26px;height:26px}
+    .sportIcon svg{width:46px;height:46px}
 
-    /* LOGOS (clean “badge” look) */
+    /* BIG logos */
     .logo{
-      width:52px;
-      height:52px;
-      border-radius:18px;
+      width:96px;
+      height:96px;
+      border-radius:30px;
       display:grid;
       place-items:center;
       overflow:hidden;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow: 0 6px 18px rgba(0,0,0,.35);
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
       flex:0 0 auto;
     }
     .logo img{
       width:100%;
       height:100%;
       object-fit:contain;
-      padding:7px;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+      padding:10px;
+      filter: drop-shadow(0 3px 12px rgba(0,0,0,.35));
     }
 
     .teams{
       display:inline-flex;
       align-items:center;
-      gap:14px;
+      gap:22px;
       font-weight:1100;
+      color:var(--white);
     }
-
     .name{
-      max-width:340px;
+      max-width:520px;
       overflow:hidden;
       text-overflow:ellipsis;
       white-space:nowrap;
+      color:var(--white);
     }
 
     .vs{
-      color:var(--muted);
-      font-weight:1100;
-      letter-spacing:1px;
+      color:var(--white);
+      font-weight:1200;
+      letter-spacing:1.2px;
       text-transform:uppercase;
-      padding:6px 14px;
+      padding:12px 20px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-      font-size:20px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.07);
+      font-size:30px;
     }
 
     .score{
-      font-weight:1200;
-      letter-spacing:.5px;
+      color:var(--white);
+      font-weight:1300;
+      letter-spacing:.8px;
     }
 
     .meta{
       color:var(--muted);
-      font-weight:950;
-      font-size:22px;
+      font-weight:1100;
+      font-size:32px;
       letter-spacing:.2px;
     }
 
     .dot{
       color:var(--sep);
-      font-weight:900;
-      font-size:34px;
-      margin:0 2px;
+      font-weight:1200;
+      font-size:56px;
+      margin:0 6px;
     }
-
-    /* OPTIONAL 2nd line (smaller) — can be disabled */
-    .tickerWrap.small{
-      flex:0 0 auto;
-      height:120px;
-    }
-    .inner.small{
-      font-size:26px;
-      animation-duration:80s;
-      gap:26px;
-    }
-
   </style>
 </head>
 
@@ -283,7 +267,6 @@
     </div>
 
     <div class="stage">
-      <!-- BIG PRIMARY TICKER -->
       <div class="tickerWrap">
         <div class="marquee">
           <div class="inner" id="innerBig">
@@ -291,35 +274,18 @@
           </div>
         </div>
       </div>
-
-      <!-- SECONDARY TICKER (optional, looks amazing on big screens)
-           If you want ONE ticker only, delete this whole block. -->
-      <div class="tickerWrap small">
-        <div class="marquee">
-          <div class="inner small" id="innerSmall">
-            <span class="item"><span class="tag next">INFO</span><span class="meta">Loading…</span></span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
   <script>
-    // ✅ Your working endpoints
     const FEED_URL  = "https://calm-limit-4982.shootscore3.workers.dev";
     const LOGO_PROXY = "https://calm-limit-4982.shootscore3.workers.dev/logo?u=";
 
-    // Refresh + speeds
     const REFRESH_MS = 60_000;
-
-    // Ticker speed: higher = slower (for readability)
-    const BIG_SECONDS = 65;
-    const SMALL_SECONDS = 95;
+    const BIG_SECONDS = 90; // slower = easier to read
 
     const innerBig = document.getElementById("innerBig");
-    const innerSmall = document.getElementById("innerSmall");
     innerBig.style.animationDuration = BIG_SECONDS + "s";
-    innerSmall.style.animationDuration = SMALL_SECONDS + "s";
 
     const updatedEl = document.getElementById("updated");
     const countsEl = document.getElementById("counts");
@@ -339,16 +305,15 @@
       if (s === "final" || s === "live" || s === "next") return s;
       return "next";
     }
-
     function tagHtml(status){
       if(status === "final") return '<span class="tag final">FINAL</span>';
       if(status === "live")  return '<span class="tag live">LIVE</span>';
       return '<span class="tag next">NEXT</span>';
     }
 
-    // ---- sport SVG decals (chunky “decal” style) ----
+    // Chunky SVG sport decals
     function sportSvg(type){
-      const common = `fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"`;
+      const common = `fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"`;
       const wrap = (inner)=>`<svg viewBox="0 0 24 24" ${common}>${inner}</svg>`;
       const t = (type||"").toLowerCase();
 
@@ -361,7 +326,6 @@
       if(t.includes("wrestling")) return wrap(`<path d="M7 7a3 3 0 1 0 4 3"/><path d="M13 10a3 3 0 1 0 4 3"/><path d="M9 10l6 4"/><path d="M8 18h8"/>`);
       return wrap(`<path d="M4 18V6"/><path d="M20 18V6"/><path d="M4 12h16"/>`);
     }
-
     function sportIconHtml(sportType){
       return `<span class="sportIcon">${sportSvg(sportType)}</span>`;
     }
@@ -371,20 +335,18 @@
         const proxied = LOGO_PROXY + encodeURIComponent(logoUrl);
         return `<span class="logo"><img src="${proxied}" alt="${teamName} logo" loading="lazy"></span>`;
       }
-      // fallback: show initials in a badge-like box
       const initials = (teamName||"HS").split(/\s+/).map(w=>w[0]).join("").slice(0,3).toUpperCase();
-      return `<span class="logo" style="display:grid;place-items:center;color:rgba(243,246,255,.85);font-size:16px;font-weight:1100">${initials}</span>`;
+      return `<span class="logo" style="display:grid;place-items:center;color:#fff;font-size:22px;font-weight:1200">${initials}</span>`;
     }
 
     function fmtScore(a,b){
-      if(a == null || b == null) return "—";
+      if(a == null || b == null) return "";
       return `${a}-${b}`;
     }
 
     function itemHtml(it){
       const status = normStatus(it.status);
 
-      // Prefer structured fields (your Worker now provides these)
       const sport = it.sport || "";
       const sportType = it.sportType || sport;
       const away = it.away || "—";
@@ -392,8 +354,8 @@
       const awayScore = (it.awayScore ?? null);
       const homeScore = (it.homeScore ?? null);
       const vsWord = it.vsWord || "vs";
-      const detail = it.time ? it.time : (it.location ? it.location : "");
 
+      const detail = it.time ? it.time : (it.location ? it.location : "");
       const scoreText = (status === "final" || status === "live") ? fmtScore(awayScore, homeScore) : "";
 
       return `
@@ -413,12 +375,11 @@
       `;
     }
 
-    function dedupeByKey(items){
-      // Basic dedupe so repeats don’t spam the ticker
+    function dedupe(items){
       const seen = new Set();
       const out = [];
       for(const it of items){
-        const key = `${it.status}|${it.sport}|${it.away}|${it.home}|${it.date}|${it.time||""}`;
+        const key = `${normStatus(it.status)}|${it.sport}|${it.away}|${it.home}|${it.date}|${it.time||""}|${it.awayScore||""}|${it.homeScore||""}`;
         if(seen.has(key)) continue;
         seen.add(key);
         out.push(it);
@@ -426,19 +387,7 @@
       return out;
     }
 
-    function buildTicker(innerEl, items){
-      if(!items.length){
-        innerEl.innerHTML = `<span class="item">${tagHtml("next")} <span class="meta">No games found</span></span>`;
-        return;
-      }
-      const chunks = items.map(itemHtml);
-      const html = chunks.join(`<span class="dot">•</span>`);
-      // duplicate for seamless loop
-      innerEl.innerHTML = html + `<span class="dot">•</span>` + html;
-    }
-
     function sortItems(items){
-      // LIVE first, then FINAL (most recent), then NEXT (soonest)
       const rank = (s)=>{
         s = normStatus(s);
         if(s==="live") return 0;
@@ -449,7 +398,6 @@
         const ra = rank(a.status), rb = rank(b.status);
         if(ra !== rb) return ra - rb;
 
-        // finals newest first; next soonest first
         const da = (a.date || ""), db = (b.date || "");
         if(normStatus(a.status)==="final" && normStatus(b.status)==="final"){
           return db.localeCompare(da);
@@ -458,22 +406,30 @@
       });
     }
 
+    function buildTicker(items){
+      if(!items.length){
+        innerBig.innerHTML = `<span class="item">${tagHtml("next")} <span class="meta">No games found</span></span>`;
+        return;
+      }
+      const chunks = items.map(itemHtml);
+      const html = chunks.join(`<span class="dot">•</span>`);
+      innerBig.innerHTML = html + `<span class="dot">•</span>` + html;
+    }
+
     async function load(){
       try{
         const res = await fetch(FEED_URL + "?v=" + Date.now(), { cache:"no-store" });
         if(!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
+
         const raw = Array.isArray(data.items) ? data.items : [];
+        const items = sortItems(dedupe(raw));
 
-        const items = sortItems(dedupeByKey(raw));
-
-        // counts
         const live = items.filter(x=>normStatus(x.status)==="live").length;
         const fin  = items.filter(x=>normStatus(x.status)==="final").length;
         const nxt  = items.filter(x=>normStatus(x.status)==="next").length;
         countsEl.textContent = `LIVE ${live} • FINAL ${fin} • NEXT ${nxt}`;
 
-        // updated
         if(data.updated){
           const d = new Date(data.updated);
           const h12 = ((d.getHours()+11)%12)+1;
@@ -481,17 +437,10 @@
           updatedEl.textContent = `Updated: ${h12}:${pad(d.getMinutes())} ${ampm}`;
         } else updatedEl.textContent = "Updated: —";
 
-        // Build big ticker with everything
-        buildTicker(innerBig, items.slice(0, 40));
-
-        // Small ticker: show only NEXT games (or only FINALS) for variety
-        const nextOnly = items.filter(x=>normStatus(x.status)==="next").slice(0, 40);
-        buildTicker(innerSmall, nextOnly.length ? nextOnly : items.slice(0,40));
-
+        buildTicker(items.slice(0, 50));
       } catch(e){
         countsEl.textContent = "Feed error";
         innerBig.innerHTML = `<span class="item">${tagHtml("next")} <span class="meta">Unable to load ticker data</span></span>`;
-        innerSmall.innerHTML = innerBig.innerHTML;
         console.error(e);
       }
     }
@@ -499,7 +448,7 @@
     tickClock();
     setInterval(tickClock, 1000);
     load();
-    setInterval(load, REFRESH_MS);
+    setInterval(load, 60_000);
   </script>
 </body>
 </html>
